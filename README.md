@@ -6,12 +6,13 @@ Planned for future deployment with Redis integration for caching and performance
 ## 🚀 Features
 
 ### 🔑  User Authentication
-(Signup/Login with validation)
+(Signup/Login/logout with validation)
 
 ### 📊  Track Workouts
 (Add, update, delete exercises)
 
 ### 🎯  Set and Manage Fitness Goals
+(Add, update, delete goals)
 
 ### 👤  Profile Management
 (Update/Delete profile)
@@ -19,7 +20,7 @@ Planned for future deployment with Redis integration for caching and performance
 ### 🌍  Community Page for fitness enthusiasts
 
 ### 🗺  Map Integration 
-(future enhancement)
+(User can find best, suitable tracks for fitness using MapAPI)
 
 ## 🛠 Tech Stack
 
