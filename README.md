@@ -5,17 +5,21 @@ Planned for future deployment with Redis integration for caching and performance
 
 ## 🚀 Features
 
-### 🔑  User Authentication (Signup/Login with validation)
+### 🔑  User Authentication
+(Signup/Login with validation)
 
-### 📊  Track Workouts (Add, update, delete exercises)
+### 📊  Track Workouts
+(Add, update, delete exercises)
 
 ### 🎯  Set and Manage Fitness Goals
 
-### 👤  Profile Management (Update/Delete profile)
+### 👤  Profile Management
+(Update/Delete profile)
 
 ### 🌍  Community Page for fitness enthusiasts
 
-### 🗺  Map Integration (future enhancement)
+### 🗺  Map Integration 
+(future enhancement)
 
 ## 🛠 Tech Stack
 
@@ -25,7 +29,8 @@ Planned for future deployment with Redis integration for caching and performance
 
 ### Database: MongoDB
 
-### Authentication: Custom validation (with plans for JWT/Passport in future)
+### Authentication: Custom validation 
+(with plans for JWT/Passport in future)
 
 ### Caching & Deployment (Future): Redis
 
