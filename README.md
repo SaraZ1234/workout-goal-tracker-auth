@@ -1,6 +1,6 @@
 ## 🏋️ Workout Goal Tracker
 
-"A fully responsive and user-friendly fitness web application that enables users to track workouts, set fitness goals, and monitor progress. Built with Node.js, Express, MongoDB, HTML, CSS, and JavaScript. Designed with an intuitive UI for seamless interaction. Planned for future deployment with Redis integration for caching and enhanced performance."
+"A fully responsive and user-friendly fitness web application with dedicated user and admin panels. Users can track workouts, set fitness goals, monitor progress, and discover the best fitness routes through intelligent suggestions. Built with Node.js, Express, MongoDB, HTML, CSS, and JavaScript, featuring an intuitive UI for seamless interaction. Planned for future deployment with Redis integration for caching and enhanced performance."
 ## 🚀 Features
 
 ### 🔑  User Authentication
