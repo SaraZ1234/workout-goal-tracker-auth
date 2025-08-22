@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css" />
+
+    <!-- Font Awesome CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-KvjyjrsoI5FJ3ZbGmxI6m+1+w7k8kD1d+dL9i7wO83tiWUsYyD/N6OzY6Dn3ObcBMN6KTFxHQzU9l+EQVzYqBQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f4;
+        color: #222;
+      }
+      main {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        gap: 20px;
+      }
+      .sidebar {
+        background-color: #222;
+        color: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .sidebar h3 {
+        margin-bottom: 10px;
+        color: #ff6600;
+        font-size: 1.3rem;
+      }
+      .stat-card {
+        background-color: #333;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+      }
+      .stat-card h4 {
+        font-size: 1.5rem;
+        margin-bottom: 5px;
+      }
+      .stat-card p {
+        color: #ff6600;
+        font-weight: 600;
+      }
+      .dashboard-content {
+        background-color: #fff;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      }
+      .dashboard-content h2 {
+        text-align: center;
+        color: #ff6600;
+        margin-bottom: 30px;
+        font-size: 2rem;
+      }
+      .workout-form-container form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+      .workout-form-container label {
+        font-weight: 600;
+      }
+      .workout-form-container input {
+        padding: 12px 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border 0.3s ease, box-shadow 0.3s ease;
+      }
+      .workout-form-container input:focus {
+        border-color: #ff6600;
+        box-shadow: 0 0 8px rgba(255, 102, 0, 0.3);
+        outline: none;
+      }
+      #exercisesContainer h3 {
+        margin-bottom: 12px;
+        font-weight: 600;
+      }
+      .exercise {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 10px;
+        padding: 15px;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+      }
+      .exercise input {
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+      }
+      .removeExercise {
+        background-color: #ff6600;
+        color: #fff;
+        border: none;
+        padding: 8px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.3s;
+      }
+      .removeExercise:hover {
+        background-color: #e65c00;
+      }
+      #addExercise,
+      button[type="submit"] {
+        padding: 12px 20px;
+        border: none;
+        border-radius: 8px;
+        background-color: #ff6600;
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s;
+        width: fit-content;
+      }
+      #addExercise:hover,
+      button[type="submit"]:hover {
+        background-color: #e65c00;
+      }
+      #message {
+        margin-top: 20px;
+        padding: 12px 15px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-align: center;
+        display: none;
+      }
+      #message.success {
+        display: block;
+        background-color: #d1e7dd;
+        color: #0f5132;
+      }
+      #message.error {
+        display: block;
+        background-color: #f8d7da;
+        color: #842029;
+      }
+      /* ✅ Workout cards (apply globally, not only for mobile) */
+      .workout-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        transition: transform 0.2s ease;
+      }
+      .workout-card:hover {
+        transform: translateY(-2px);
+      }
+
+      .workout-card h4 {
+        margin: 0;
+        font-size: 1.2rem;
+        color: #ff6600;
+      }
+
+      .workout-actions {
+        margin-top: 10px;
+        display: flex;
+        gap: 10px;
+      }
+
+      .workout-actions button {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.3s;
+      }
+
+      button.editWorkout {
+        background: #0d6efd;
+        color: #fff;
+      }
+      button.editWorkout:hover {
+        background: #0a58ca;
+      }
+      button.deleteWorkout {
+        background: #dc3545;
+        color: #fff;
+      }
+      button.deleteWorkout:hover {
+        background: #b02a37;
+      }
+
+      .workout-card ul {
+        margin-top: 10px;
+        padding-left: 20px;
+      }
+      .workout-card li {
+        margin: 4px 0;
+        font-size: 0.95rem;
+      }
+      .fa-solid {
+        font-size: 2rem;
+        color: #ff9800;
+        background: #1c1c1c;
+        padding: 12px;
+        border-radius: 50%;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s ease;
+      }
+
+      .fa-solid:hover {
+        color: #1c1c1c;
+        background: #ff9800;
+        transform: scale(1.1);
+      }
+
+      @media (max-width: 992px) {
+        main {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 600px) {
+        .exercise {
+          grid-template-columns: 1fr;
+        }
+        #workoutList {
+          margin-top: 30px;
+        }
+
+        .workout-card {
+          background: #fff;
+          border-radius: 12px;
+          padding: 20px;
+          margin-bottom: 15px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+          transition: transform 0.2s ease;
+        }
+        .workout-card:hover {
+          transform: translateY(-2px);
+        }
+
+        .workout-card h4 {
+          margin: 0;
+          font-size: 1.2rem;
+          color: #ff6600;
+        }
+
+        .workout-actions {
+          margin-top: 10px;
+          display: flex;
+          gap: 10px;
+        }
+
+        .workout-actions button {
+          padding: 8px 12px;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          font-weight: 600;
+          transition: background 0.3s;
+        }
+
+        button.editWorkout {
+          background: #0d6efd;
+          color: #fff;
+        }
+        button.editWorkout:hover {
+          background: #0a58ca;
+        }
+        button.deleteWorkout {
+          background: #dc3545;
+          color: #fff;
+        }
+        button.deleteWorkout:hover {
+          background: #b02a37;
+        }
+
+        .workout-card ul {
+          margin-top: 10px;
+          padding-left: 20px;
+        }
+        .workout-card li {
+          margin: 4px 0;
+          font-size: 0.95rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/" class="logo">FITFACTORY</a>
+
+      <!-- Desktop nav & buttons (hidden on mobile) -->
+      <nav class="navbar">
+        <ul>
+          <li><a href="/api/user/login">Workouts</a></li>
+          <li><a href="/map">Routes</a></li>
+          <li><a href="/api/user/community">Community</a></li>
+        </ul>
+      </nav>
+
+      <div class="btn">
+        <button class="a" onclick="location.href='/api/user/logout'">
+          Logout
+        </button>
+      </div>
+
+      <!-- Hamburger -->
+      <button class="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+
+    <!-- Mobile sliding menu container -->
+    <div class="menu" aria-hidden="true">
+      <nav>
+        <ul>
+          <li><a href="/api/user/login">Workouts</a></li>
+          <li><a href="/map">Routes</a></li>
+          <li><a href="/api/user/community">Community</a></li>
+        </ul>
+      </nav>
+
+      <div class="btn">
+        <button class="a" onclick="location.href='/api/user/logout'">
+          Logout
+        </button>
+      </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="menu-overlay"></div>
+
+    <main>
+      <!-- ✅ Add this inside <head> -->
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      />
+
+      <div class="sidebar">
+        <h3>My Stats</h3>
+
+        <div class="stat-card">
+          <h4 id="workoutsCompleted">
+            <i class="fa-solid fa-dumbbell"></i>
+          </h4>
+          <p>Workouts Completed</p>
+        </div>
+
+        <div class="stat-card">
+          <h4 id="totalExercises">
+            <i class="fa-solid fa-person-running"></i>
+          </h4>
+          <p>Total Exercises</p>
+        </div>
+
+        <div class="stat-card">
+          <h4 id="caloriesBurned">
+            <i class="fa-solid fa-fire"></i>
+          </h4>
+          <p>Calories Burned</p>
+        </div>
+      </div>
+
+      <div class="dashboard-content">
+        <h2>Welcome to Your Dashboard</h2>
+        <div class="workout-form-container">
+          <form id="workoutForm">
+            <label>Workout Name</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="e.g. Chest Day"
+              required
+            />
+            <div id="exercisesContainer">
+              <h3>Exercises</h3>
+              <div class="exercise">
+                <input
+                  type="text"
+                  name="exerciseName"
+                  placeholder="Exercise Name"
+                  required
+                />
+                <input type="number" name="reps" placeholder="Reps" required />
+                <input type="number" name="sets" placeholder="Sets" required />
+                <input type="number" name="weight" placeholder="Weight" />
+                <input type="text" name="goals" placeholder="Goals" required />
+                <button type="button" class="removeExercise">Remove</button>
+              </div>
+            </div>
+            <button type="button" id="addExercise">Add Exercise</button>
+            <button type="submit">Save Workout</button>
+          </form>
+        </div>
+        <div id="message"></div>
+      </div>
+    </main>
+
+    <script>
+      const workoutForm = document.getElementById("workoutForm");
+      const exercisesContainer = document.getElementById("exercisesContainer");
+      const addExerciseBtn = document.getElementById("addExercise");
+      const messageDiv = document.getElementById("message");
+
+      let editingWorkoutId = null;
+
+      function showMessage(msg, type) {
+        messageDiv.textContent = msg;
+        messageDiv.className = type;
+        setTimeout(() => (messageDiv.className = ""), 2000);
+      }
+
+      addExerciseBtn.addEventListener("click", () => {
+        const div = document.createElement("div");
+        div.className = "exercise";
+        div.innerHTML = `
+      <input type="text" name="exerciseName" placeholder="Exercise Name" required/>
+      <input type="number" name="reps" placeholder="Reps" required/>
+      <input type="number" name="sets" placeholder="Sets" required/>
+      <input type="number" name="weight" placeholder="Weight"/>
+      <input type="text" name="goals" placeholder="Goals" required>
+      <button type="button" class="removeExercise">Remove</button>
+    `;
+        exercisesContainer.appendChild(div);
+      });
+
+      exercisesContainer.addEventListener("click", (e) => {
+        if (e.target.classList.contains("removeExercise")) {
+          e.target.parentElement.remove();
+        }
+      });
+
+      // ✅ Fetch workouts for logged-in user
+      async function fetchWorkouts() {
+        const res = await fetch("/api/user/workouts", {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        });
+        const workouts = await res.json();
+        renderWorkouts(workouts);
+      }
+
+      function renderWorkouts(workouts) {
+        const dashboardContent = document.querySelector(".dashboard-content");
+        const oldList = document.querySelector("#workoutList");
+        if (oldList) oldList.remove();
+
+        const listDiv = document.createElement("div");
+        listDiv.id = "workoutList";
+        listDiv.innerHTML =
+          "<h3 style='margin-bottom:15px;'>Saved Workouts</h3>";
+
+        workouts.forEach((w) => {
+          const div = document.createElement("div");
+          div.className = "workout-card";
+          div.innerHTML = `
+        <h4>${w.name}</h4>
+        <ul>
+          ${w.exercises
+            .map(
+              (ex) =>
+                `<li>${ex.name} — ${ex.reps} reps × ${ex.sets} sets — ${ex.weight} kg - ${ex.goals} goals</li>`
+            )
+            .join("")}
+        </ul>
+        <div class="workout-actions">
+          <button data-id="${w._id}" class="editWorkout">✏️ Edit</button>
+          <button data-id="${w._id}" class="deleteWorkout">🗑 Delete</button>
+        </div>
+      `;
+          listDiv.appendChild(div);
+        });
+
+        dashboardContent.appendChild(listDiv);
+      }
+
+      // ✅ Add / Update workout
+      workoutForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const name = workoutForm.name.value.trim();
+        const exercises = Array.from(
+          exercisesContainer.querySelectorAll(".exercise")
+        ).map((ex) => ({
+          name: ex.querySelector('[name="exerciseName"]').value,
+          reps: +ex.querySelector('[name="reps"]').value,
+          sets: +ex.querySelector('[name="sets"]').value,
+          weight: +ex.querySelector('[name="weight"]').value,
+          goals: ex.querySelector('[name="goals"]').value, // keep as string
+        }));
+
+        const url = editingWorkoutId
+          ? `/api/user/workouts/${editingWorkoutId}`
+          : `/api/user/workouts`;
+        const method = editingWorkoutId ? "PUT" : "POST";
+
+        await fetch(url, {
+          method,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({
+            name,
+            exercises,
+          }),
+        });
+
+        showMessage(
+          editingWorkoutId ? "Workout updated!" : "Workout added!",
+          "success"
+        );
+        editingWorkoutId = null;
+        workoutForm.reset();
+        exercisesContainer.innerHTML = `<h3>Exercises</h3>
+      <div class="exercise">
+        <input type="text" name="exerciseName" placeholder="Exercise Name" required/>
+        <input type="number" name="reps" placeholder="Reps" required/>
+        <input type="number" name="sets" placeholder="Sets" required/>
+        <input type="number" name="weight" placeholder="Weight"/>
+        <input type="text" name="goals" placeholder="Goals" required>
+        <button type="button" class="removeExercise">Remove</button>
+      </div>`;
+        fetchWorkouts();
+      });
+
+      // ✅ Delete + Edit handlers
+      document.addEventListener("click", async (e) => {
+        if (e.target.classList.contains("deleteWorkout")) {
+          const id = e.target.dataset.id;
+          await fetch(`/api/user/workouts/${id}`, {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+          showMessage("Workout deleted!", "success");
+          fetchWorkouts();
+        }
+        if (e.target.classList.contains("editWorkout")) {
+          const id = e.target.dataset.id;
+          const res = await fetch("/api/user/workouts", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+          const workouts = await res.json();
+          const workout = workouts.find((w) => w._id === id);
+
+          workoutForm.name.value = workout.name;
+          exercisesContainer.innerHTML =
+            `<h3>Exercises</h3>` +
+            workout.exercises
+              .map(
+                (ex) => `
+          <div class="exercise">
+            <input type="text" name="exerciseName" value="${ex.name}" required/>
+            <input type="number" name="reps" value="${ex.reps}" required/>
+            <input type="number" name="sets" value="${ex.sets}" required/>
+            <input type="number" name="weight" value="${ex.weight}"/>
+            <input type="text" name="goals" placeholder="Goals" value="${ex.goals}" required>
+            <button type="button" class="removeExercise">Remove</button>
+          </div>`
+              )
+              .join("");
+          editingWorkoutId = id;
+        }
+      });
+
+      fetchWorkouts();
+    </script>
+
+    <script src="/js/acript.js"></script>
+  </body>
+</html>

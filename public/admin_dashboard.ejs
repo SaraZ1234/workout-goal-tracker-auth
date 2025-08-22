@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background-color: #333;
+      color: #fff;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    h1 {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Admin Dashboard</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Age</th>
+        <th>Weight</th>
+        <th>Height</th>
+        <th>Fitness Level</th>
+        <th>Workouts</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(user => { %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td><%= user.role === 1 ? 'Admin' : 'User' %></td>
+          <td><%= user.profile?.age || '-' %></td>
+          <td><%= user.profile?.weight || '-' %></td>
+          <td><%= user.profile?.height || '-' %></td>
+          <td><%= user.profile?.fitnessLevel || '-' %></td>
+          <td>
+            <% if (user.workouts.length > 0) { %>
+              <ul>
+                <% user.workouts.forEach(w => { %>
+                  <li><%= w.name %></li>
+                <% }) %>
+              </ul>
+            <% } else { %>
+              -
+            <% } %>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</body>
+</html>

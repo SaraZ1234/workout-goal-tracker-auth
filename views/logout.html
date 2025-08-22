@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logout</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/login.css" />
+  </head>
+  <style>
+    /* Logout Form Styling */
+    .form-container {
+      max-width: 400px;
+      margin: 80px auto;
+      padding: 30px 25px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 26px;
+      color: #1e3a8a; /* deep blue */
+    }
+
+    .form-container p {
+      text-align: center;
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 25px;
+    }
+
+    .form-container label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .form-container input {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      border: 1.5px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .form-container input:focus {
+      border-color: #1e3a8a;
+      box-shadow: 0 0 5px rgba(30, 58, 138, 0.4);
+      outline: none;
+    }
+
+    .form-container button.a {
+      width: 100%;
+      padding: 12px;
+      background: #1e3a8a;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .form-container button.a:hover {
+      background: #3746b2;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      .form-container {
+        margin: 50px 20px;
+        padding: 25px 20px;
+      }
+
+      .form-container h2 {
+        font-size: 22px;
+      }
+
+      .form-container button.a {
+        font-size: 15px;
+      }
+    }
+  </style>
+  <body>
+    <header>
+      <a href="/" class="logo">FITFACTORY</a>
+
+      <!-- Desktop nav & buttons (hidden on mobile) -->
+      <nav class="navbar">
+        <ul>
+          <li><a href="/api/user/login">Workouts</a></li>
+          <li><a href="/map">Routes</a></li>
+          <li><a href="/api/user/community">Community</a></li>
+        </ul>
+      </nav>
+
+      <div class="btn">
+        <button class="a" onclick="location.href='/api/user/logout'">
+          Logout
+        </button>
+      </div>
+
+      <!-- Hamburger -->
+      <button class="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+
+    <!-- Mobile sliding menu container -->
+    <div class="menu" aria-hidden="true">
+      <nav>
+        <ul>
+          <li><a href="/api/user/login">Workouts</a></li>
+          <li><a href="/map">Routes</a></li>
+          <li><a href="/api/user/community">Community</a></li>
+        </ul>
+      </nav>
+
+      <div class="btn">
+        <button class="a" onclick="location.href='/api/user/login'">
+          Login
+        </button>
+      </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="menu-overlay"></div>
+
+    <div class="form-container">
+      <h2>Log Out</h2>
+      <p>Enter your credentials to log out:</p>
+
+      <form id="logoutForm">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter Email" required />
+
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter Password"
+          required
+        />
+
+        <button type="submit" class="a">Log Out</button>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("logoutForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const email = document.getElementById("email").value.trim();
+          const password = document.getElementById("password").value.trim();
+
+          if (!email || !password) return alert("Please fill all fields");
+
+          try {
+            const response = await fetch("/api/user/logout", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              credentials: "include",
+              body: JSON.stringify({ email, password }),
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+              alert(data.message);
+              // Redirect to login page after logout
+              window.location.href = "/api/user/login";
+            } else {
+              alert(data.message);
+            }
+          } catch (err) {
+            console.error(err);
+            alert("Logout failed. Please try again.");
+          }
+        });
+    </script>
+
+    <script src="/js/acript.js"></script>
+  </body>
+</html>

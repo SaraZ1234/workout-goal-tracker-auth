@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Fitness Tracker - Routes</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #f4f7fb;
+      }
+
+      .container {
+        display: flex;
+        height: calc(100vh - 70px);
+      }
+
+      .sidebar {
+        width: 30%;
+        background: #ffffff;
+        padding: 20px;
+        border-right: 1px solid #ddd;
+        overflow-y: auto;
+      }
+
+      .sidebar h3 {
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-size: 20px;
+        color: #0077cc;
+      }
+
+      .highlight {
+        background: #e0f3ff;
+        padding: 12px;
+        margin-bottom: 20px;
+        border-left: 5px solid #0077cc;
+        border-radius: 6px;
+        font-weight: bold;
+      }
+
+      #map {
+        width: 70%;
+        height: 100%;
+      }
+
+      .route-item {
+        padding: 12px;
+        margin-bottom: 12px;
+        background: #fafafa;
+        border-radius: 8px;
+        border: 1px solid #eee;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .route-item:hover {
+        background: #0077cc;
+        color: white;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          height: auto;
+          border-right: none;
+          border-bottom: 1px solid #ddd;
+        }
+
+        #map {
+          width: 100%;
+          height: 60vh;
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <header>
+      <a href="/" class="logo">FITFACTORY</a>
+
+      <!-- Desktop nav -->
+      <nav class="navbar">
+        <ul>
+          <li><a href="/api/user/login">Workouts</a></li>
+          <li><a href="/map">Routes</a></li>
+          <li><a href="/api/user/community">Community</a></li>
+        </ul>
+      </nav>
+
+      <div class="btn">
+        <button class="a" onclick="location.href='/api/user/login'">Login</button>
+      </div>
+
+      <!-- Hamburger -->
+      <button class="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+
+    <!-- Mobile sliding menu -->
+    <div class="menu" aria-hidden="true">
+      <nav>
+        <ul>
+          <li><a href="/api/user/login">Workouts</a></li>
+          <li><a href="/map">Routes</a></li>
+          <li><a href="/api/user/community">Community</a></li>
+        </ul>
+      </nav>
+
+      <div class="btn">
+        <button class="a" onclick="location.href='/api/user/login'">Login</button>
+        <button class="a" onclick="location.href='/api/user/signup'">Sign Up</button>
+      </div>
+    </div>
+
+    <div class="menu-overlay"></div>
+
+    <!-- Main layout -->
+    <div class="container">
+      <!-- Sidebar with routes -->
+      <div class="sidebar">
+        <div class="highlight" id="bestRouteHighlight">
+          🌟 Best Track to Visit: Loading...
+        </div>
+        <h3>Best Routes</h3>
+        <div
+          class="route-item"
+          onclick="focusRoute(33.6844, 73.0479, 'Morning Jog Route')"
+        >
+          🏃 Morning Jog - F9 Park
+          <br /><small>Perfect for fresh mornings</small>
+        </div>
+        <div
+          class="route-item"
+          onclick="focusRoute(33.72, 73.05, 'Cycling Track')"
+        >
+          🚴 Cycling Track - Lake View
+          <br /><small>Best for long cycling sessions</small>
+        </div>
+        <div
+          class="route-item"
+          onclick="focusRoute(33.71, 73.1, 'Evening Walk Route')"
+        >
+          🚶 Evening Walk - Trail 3
+          <br /><small>Calm evenings with nature</small>
+        </div>
+        <div
+          class="route-item"
+          onclick="focusRoute(33.70, 73.02, 'Night Walk Route')"
+        >
+          🌙 Night Walk - Daman-e-Koh
+          <br /><small>Peaceful night view of city</small>
+        </div>
+      </div>
+
+      <!-- Map -->
+      <div id="map"></div>
+    </div>
+
+    <!-- Google Maps -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyuQq_myoLHay5qCSk5ciBzpIs1Ig961w&callback=initMap"
+      async
+      defer
+    ></script>
+
+    <script>
+      let map;
+      let marker;
+
+      function initMap() {
+        const defaultLocation = { lat: 33.6844, lng: 73.0479 };
+        map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 12,
+          center: defaultLocation,
+        });
+
+        marker = new google.maps.Marker({
+          position: defaultLocation,
+          map: map,
+          title: "Default Route",
+        });
+
+        updateBestRoute(); // highlight best route based on time
+      }
+
+      function focusRoute(lat, lng, title) {
+        const location = { lat, lng };
+        map.setCenter(location);
+        map.setZoom(14);
+
+        if (marker) marker.setMap(null);
+        marker = new google.maps.Marker({
+          position: location,
+          map: map,
+          title: title,
+        });
+      }
+
+      // Highlight best route depending on time
+      function updateBestRoute() {
+        const hour = new Date().getHours();
+        const highlight = document.getElementById("bestRouteHighlight");
+
+        if (hour >= 5 && hour < 11) {
+          highlight.textContent = "🌟 Best Track to Visit: Morning Jog at F9 Park";
+        } else if (hour >= 11 && hour < 16) {
+          highlight.textContent = "🌟 Best Track to Visit: Cycling Track at Lake View";
+        } else if (hour >= 16 && hour < 20) {
+          highlight.textContent = "🌟 Best Track to Visit: Evening Walk at Trail 3";
+        } else {
+          highlight.textContent = "🌟 Best Track to Visit: Night Walk at Daman-e-Koh";
+        }
+      }
+    </script>
+
+    <script src="/js/acript.js"></script>
+  </body>
+</html>

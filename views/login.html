@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/login.css" />
+  </head>
+  <body>
+    <header>
+      <a href="/" class="logo">FITFACTORY</a>
+
+      <!-- Desktop nav & buttons (hidden on mobile) -->
+      <nav class="navbar">
+        <ul>
+          <li><a href="/api/user/login">Workouts</a></li>
+          <li><a href="/map">Routes</a></li>
+          <li><a href="/api/user/community">Community</a></li>
+        </ul>
+      </nav>
+
+      <div class="btn">
+        <button class="a" onclick="location.href='/api/user/signup'">Sign Up</button>
+      </div>
+
+      <!-- Hamburger -->
+      <button class="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+
+    <!-- Mobile sliding menu container -->
+    <div class="menu" aria-hidden="true">
+      <nav>
+        <ul>
+          <li><a href="/api/user/login">Workouts</a></li>
+          <li><a href="/map">Routes</a></li>
+          <li><a href="/api/user/community">Community</a></li>
+        </ul>
+      </nav>
+
+      <div class="btn">
+        <button class="a" onclick="location.href='/api/user/login'">Login</button>
+        <button class="a" onclick="location.href='/api/user/signup'">Sign Up</button>
+      </div>
+    </div>
+
+    <div class="menu-overlay"></div>
+
+    <div class="form-container">
+      <h2>Log In</h2>
+      <h3>Don't have an account? <a href="signup.html">Sign Up</a></h3>
+      <!-- Remove action -->
+      <form class="login-form" id="loginForm">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter Email" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter Password" required />
+
+        <a href="#" class="forgot-password">Forgot Password?</a>
+
+        <button type="submit" class="a">Log In</button>
+      </form>
+    </div>
+
+    <script>
+      document.getElementById("loginForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        if (!email || !password) return alert("Please fill all fields");
+
+        try {
+          const response = await fetch("/api/user/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({ email, password }),
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            // Redirect user based on backend
+            window.location.href = data.redirect; // backend must send /api/admin/admin_dashboard for admins
+          } else {
+            alert(data.message);
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Login failed. Please try again.");
+        }
+      });
+    </script>
+
+    <script src="/js/acript.js"></script>
+    <script src="/js/navbar.js"></script>
+    <script src="/js/login.js"></script>
+  </body>
+</html>

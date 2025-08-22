@@ -1,0 +1,117 @@
+.s1 {
+  background: linear-gradient(145deg, #000000, #1a1a1a);
+  color: white;
+  padding: 60px 40px;
+  max-width: 90%;
+  margin-top: 100px;
+  margin-left: 5%;
+  border-left: 4px solid #f9d342;
+  /* border-radius: 10px; */
+  /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.s1:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+}
+
+.s1 h2 {
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  margin-bottom: 15px;
+  color: #f9d342;
+  font-weight: bold;
+}
+
+
+.s1 h3 {
+font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+  font-weight: 400;
+  /* line-height: 1.6; */
+  color: #e0e0e0;
+  max-width: 750px;
+  margin-top: 30px;
+}
+
+@media (max-width: 768px) {
+  .s1 {
+    max-width: 90%;
+    margin-left: 5%;
+    margin-top: 80px;
+    padding: 30px 15px;
+  }
+}
+
+@media (max-width: 600px) {
+  .s1 {
+    padding: 25px 12px;
+    border-left: 3px solid #f9d342;
+  }
+  
+  .s1 h2 {
+    margin-bottom: 10px;
+  }
+  
+  .s1 h3 {
+    line-height: 1.4;
+  }
+}
+
+/* section2 */
+.s2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+  gap: 0px;
+  padding: 40px 5%;
+  background: #f5f5f5; /* Light background */
+}
+
+.l1 {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 30px;
+  width: 90%; /* Makes box narrower */
+  margin-left: auto;
+  margin-right: auto; /* Centers it */
+  margin-bottom: 50px; 
+}
+
+.l1:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.l1 img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.l1 h3 {
+  font-size: 1.2rem;
+  color: #222;
+  margin: 15px 15px 5px;
+}
+
+.l1 h4 {
+  font-size: 0.9rem;
+  color: #f39c12; /* Gold accent */
+  margin: 0 15px 10px;
+}
+
+.l1 p {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0 15px 15px;
+  line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+  .l1 img {
+    height: 150px;
+  }
+}
+

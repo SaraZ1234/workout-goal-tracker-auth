@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign up</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/signup.css" />
+  </head>
+  <body>
+    <header>
+      <a href="/" class="logo">FITFACTORY</a>
+
+      <!-- Desktop nav & buttons (hidden on mobile) -->
+      <nav class="navbar">
+        <ul>
+          <li><a href="/api/user/login">Workouts</a></li>
+          <li><a href="/map">Routes</a></li>
+          <li><a href="/api/user/community">Community</a></li>
+        </ul>
+      </nav>
+
+      <div class="btn">
+        <button class="a" onclick="location.href='/api/user/login'">Login</button>
+      </div>
+
+      <!-- Hamburger -->
+      <button class="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+
+    <!-- Mobile sliding menu container -->
+    <div class="menu" aria-hidden="true">
+      <nav>
+        <ul>
+          <li><a href="/api/user/login">Workouts</a></li>
+          <li><a href="/map">Routes</a></li>
+          <li><a href="/api/user/community">Community</a></li>
+        </ul>
+      </nav>
+
+      <div class="btn">
+        <button class="a" onclick="location.href='/api/user/login'">Login</button>
+        <button class="a" onclick="location.href='/api/user/signup'">Sign Up</button>
+      </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="menu-overlay"></div>
+
+    <div class="form-container">
+      <!-- Added id="signupForm" -->
+      <form id="signupForm" class="signup-form" novalidate>
+        <h2>Create Your Account</h2>
+
+        <label for="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Enter your first name"
+          required
+        />
+
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Enter your email"
+          required
+        />
+
+        <label for="password">Password</label>
+        <div class="password-wrapper">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+            minlength="6"
+            aria-describedby="passwordHelp"
+          />
+          <button
+            type="button"
+            id="togglePassword"
+            aria-label="Show or hide password"
+          >
+            👁️
+          </button>
+        </div>
+        <small id="passwordHelp" class="helper-text">
+          Minimum 6 characters
+        </small>
+
+        <button type="submit" class="btn-submit">Sign Up</button>
+      </form>
+    </div>
+
+    <script>
+      const form = document.getElementById("signupForm");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const name = form.name.value.trim();
+        const email = form.email.value.trim();
+        const password = form.password.value.trim();
+
+        if (!name || !email || !password) {
+          alert("Please fill out all fields");
+          return;
+        }
+
+        try {
+          const res = await fetch("/api/user/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, password }),
+          });
+
+          const data = await res.json();
+
+          if (data.success) {
+            window.location.href = "/api/user/dashboard"; // now this will work
+          } else {
+            alert(data.message);
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Something went wrong. Please try again.");
+        }
+      });
+
+      // Optional: toggle password visibility
+      const togglePassword = document.getElementById("togglePassword");
+      const passwordInput = document.getElementById("password");
+
+      togglePassword.addEventListener("click", () => {
+        const type = passwordInput.type === "password" ? "text" : "password";
+        passwordInput.type = type;
+      });
+    </script>
+
+    <script src="/js/script2.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="/js/acript.js"></script>
+    <!-- fixed typo -->
+    <script src="/js/navbar.js"></script>
+  </body>
+</html>

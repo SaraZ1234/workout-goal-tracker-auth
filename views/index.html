@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fitness Tracker App</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <a href="/" class="logo">FITFACTORY</a>
+
+      <nav class="navbar">
+        <ul>
+          <li><a href="/api/user/login">Workouts</a></li>
+          <li><a href="/map">Routes</a></li>
+          <li><a href="/api/user/community">Community</a></li>
+          <!-- <li><a href="/api/admin/dashboard">admin</a></li> -->
+        </ul>
+      </nav>
+
+      <!-- Desktop buttons -->
+      <div class="btn desktop-btn">
+        <button class="a" onclick="location.href='/api/user/login'">
+          Login
+        </button>
+        <button class="a" onclick="location.href='/api/user/signup'">Sign Up</button>
+      </div>
+
+      <!-- Hamburger -->
+      <button class="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+
+    <!-- Mobile sliding menu container -->
+    <div class="menu" aria-hidden="true">
+      <nav>
+        <ul>
+          <li><a href="/api/user/login">Workouts</a></li>
+          <li><a href="/map">Routes</a></li>
+          <li><a href="/api/user/community">Community</a></li>
+        </ul>
+      </nav>
+
+      <div class="btn">
+        <button class="a" onclick="location.href='/api/user/login'">Login</button>
+        <button class="a" onclick="location.href='/api/user/signup'">Sign Up</button>
+      </div>
+
+      <!-- Mobile nav placeholder -->
+    </div>
+
+    <!-- Overlay -->
+    <div class="menu-overlay"></div>
+
+    <section class="sec1">
+      <img
+        src="https://mapmy-static.mapmyfitness.com/8204e443475663629ec36d12c44e0881.webp"
+        alt="Fitness"
+        tabindex="0"
+      />
+      <div class="content">
+        <h2>Track Your Fitness Journey</h2>
+        <p>Stay motivated and monitor your workouts daily with FITFACTORY.</p>
+        <button onclick="location.href='/api/user/signup'">Get Started</button>
+      </div>
+    </section>
+
+    <section class="sec2">
+      <div class="left">
+        <h2>Set Goals. Log Workouts. Stay On Track.</h2>
+        <p>
+          Easily track your Workouts, set Training Plans, and discover new
+          Workout Routines to crush your goals.
+        </p>
+        <button class="a" onclick="location.href='/api/user/signup'">
+          Get Started
+        </button>
+      </div>
+      <div class="right">
+        <img
+          src="https://mapmy-static.mapmyfitness.com/aaeb86964c6a02e68784d45e76637d9c.webp"
+          alt=""
+        />
+      </div>
+    </section>
+
+    <section class="sec3">
+      <div class="top">
+        <img
+          src="https://challenge-assets.mapmyfitness.com/s5nmch5.png"
+          alt=""
+        />
+      </div>
+      <div class="bottom">
+        <h2>Push Your Limits</h2>
+        <p>Hit milestones and PR’s by taking on a new challenge every month.</p>
+      </div>
+      <button class="a" onclick="location.href='/api/user/community'">Join a challenge</button>
+    </section>
+
+    <section class="sec4">
+      <div class="left">
+        <h2>Built To Make You Better</h2>
+        <div class="data">
+          <h3>Smarter Training</h3>
+          <p>
+            Turn your phone or smartwatch into your coach—track your workouts
+            and get tons of data and tips to help you run better.
+          </p>
+          <h3>Custom Workouts</h3>
+          <p>
+            5K? Marathon? No matter where you’re at, get personalized Training
+            Plans built just for you and your goals.
+          </p>
+          <h3>Strong Community</h3>
+          <p>
+            Create your own custom challenges to push yourself and your friends.
+            For extra motivation, reach out and find support from the entire
+            MapMyFitness™ community.
+          </p>
+        </div>
+      </div>
+      <div class="right">
+        <img
+          src="https://mapmy-static.mapmyfitness.com/8750d34f0074517045e071967f1ab016.webp"
+          alt=""
+        />
+      </div>
+    </section>
+
+    <section class="sec5">
+      <div class="c1">
+        <!-- Replace fa-ladder with fa-bars if ladder doesn't show -->
+        <i class="fa-solid fa-bars icon-gradient"></i>
+
+        <h3>Miles Logged</h3>
+        <h2>9.42</h2>
+        <h4>Billion</h4>
+      </div>
+
+      <div class="c1">
+        <i class="fa-solid fa-location-dot icon-gradient"></i>
+
+        <h3>Routes Created</h3>
+        <h2>1.85</h2>
+        <h4>Billion</h4>
+      </div>
+
+      <div class="c1">
+        <i class="fa-solid fa-person-running icon-gradient"></i>
+
+        <h3>Workouts Logged</h3>
+        <h2>2.44</h2>
+        <h4>Billion</h4>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h4>MapMyFitness</h4>
+          <ul>
+            <li><a href="#">Help</a></li>
+            <li><a href="#">Log In / Register</a></li>
+            <li><a href="#">Privacy Center</a></li>
+            <li><a href="#">Support</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Developer</h4>
+          <ul>
+            <li><a href="#">Developer / API</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Go MVP!</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Join Our Team</h4>
+          <ul>
+            <li><a href="#">Join Our Team</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section connect">
+          <h4>Connect</h4>
+          <ul>
+            <li>
+              <a href="#"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <script src="/js/acript.js"></script>
+    <script src="/js/navbar.js"></script>
+  </body>
+</html>

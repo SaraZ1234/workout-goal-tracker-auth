@@ -1,0 +1,571 @@
+First of all, to make Login/Signup form. 
+I will write this in package.json:
+{
+  "name": "login_signup-form",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.16.5"
+  }
+}
+Then, do npm install.
+
+Inside index.js write code: 
+import "dotenv/config.js";
+
+import express from "express";
+
+const app = express();
+
+app.listen(8000, () => {
+  console.log("Server is connected");
+
+}). It is used to see that the DB is connected.
+
+Update index.js as follow: 
+
+import "dotenv/config.js";
+
+import express from "express";
+
+const app = express();
+
+app.use(express.json());
+
+app.listen(8000, () => {
+  console.log("Server is connected");
+
+})
+
+After that install mongoose through writing in terminal:
+by writing: npm i mongoose
+
+After that we'll write in our Model file that is: userModel.js
+
+In this we'll create Schema
+
+Code of that schema is as follow:
+import mongoose from "mongoose";
+import { type } from "os";
+
+//creating schema here
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    unique: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  }
+}, { timestamps: true })
+
+//telling MongoDB that we are putting all these entries for user through Model
+export default mongoose.model("user", userSchema);
+
+Now, we'll create db folder and in that folder we'll create file: db.js for building connection with Database
+The code that I'll write in db.js is:
+import mongoose from "mongoose";
+
+export const db = async () => {
+  try {
+
+    await mongoose.connect("");
+    console.log("Database is connected");
+
+
+  } catch (error) {
+    console.log("The error that occured while connecting db is:", error);
+
+
+  }
+}
+
+Now, we'll use MongoDB atlas for making connection
+
+Use Gpt for Atlas and when you have made Cluster. Click on 'Network Access'.
+But then click on 'Database access'
+Then, click on Add New Database User
+
+After creating new Db user. Make sure you select 'Atlas Admin' for 'Built in Role'
+
+After that go to 'Clusters' to see that Cluster has been made or not
+
+Till that the cluster is framing do following things:
+
+Type Dotenv npm on google. and for installing type it in terminal: npm i dotenv
+
+After that create .env file in your project of VS - Code
+Write in it:
+MONGO_URL = 
+PORT = 8000
+
+And provide access of this env file to index.js 
+
+as follow:
+
+At the top of index.js write: import "dotenv/config.js";
+
+and write variable PORT as such: 
+const PORT = process.env.PORT || 3000;
+ 
+Also connect it to the server as such: 
+app.listen(PORT, () => {
+  console.log(`Server is connected ${PORT}`);
+
+})
+
+
+After that we'll see that in Atlas for establishing connection:
+
+click on connect . 
+after that a pop-up interface will come. In Drivers you'll see the link copy it. 
+
+After copying it paste it in .env file:
+MONGO_URL = mongodb+srv://Maya:paulll_86@cluster0.mzpiaxj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+After that come in db.js and pass that url as such:
+    await mongoose.connect(process.env.MONGO_URL);
+
+If now, error will occur while connecting to DB then catch statement of db.js
+
+Then come to index.js and include that db.js file in it as such:
+
+import { db } from "./db/db.js";
+
+Now, we'll connect our Db to our VS-Code as such:
+
+db().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server is connected ${PORT}`);
+
+  })
+
+})
+
+full code of index.js:
+import "dotenv/config.js";
+
+import { db } from "./db/db.js";
+
+import express from "express";
+
+const app = express();
+
+const PORT = process.env.PORT || 3000;
+
+app.use(express.json());
+
+db().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server is connected ${PORT}`);
+
+  })
+
+})
+
+Now, we'll create API for connection
+
+app.use('/api/user', );
+
+Now we have to write Router of it in userRouter.js as follow:
+
+import { Router } from "express";
+
+const route = Router();
+
+
+
+export default route;
+ 
+
+After that we'll provide access to that router to index.js file as such:
+
+Write it inside index.js as: import userRouter from "./routes/userRoutes.js"
+
+and now updated content is as such: app.use('/api/user', userRouter);
+
+Now, inside Router.js write:
+route.post("/signup", )
+
+Now that controller we'll write in controller file:
+Inside controller file write: 
+export const Login = (req, res) => {
+  try {
+
+  } catch (error) {
+
+  }
+}
+
+
+export const Signup = (req, res) => {
+  try {
+
+  } catch (error) {
+
+  }
+}
+
+
+Now, next step is to provide access of that controller to router so for this write:
+route.post("/signup", Signup)
+
+But it will generate error. Mention Signup route as well as such:
+import { Signup } from "../controller/userController.js";
+ Do it at top
+
+
+Same also mention Login router as such:
+route.post("/login", Login);
+ 
+Include it at top as such:
+import { Login } from "../controller/userController.js";
+
+Now, the work of controllers will start, that include all logic part
+Inside Signup Controller write:
+  console.log("The req.body is:", req.body);
+
+Write it before try catch block
+
+Now, for checking API's go to Thunder Client
+write url: http://localhost:8000/api/user/signup. 
+And in Body write: 
+{
+  "name":"Paul"
+}
+
+you'll see request body in terminal
+
+Now, in Signup you also need email so this type in your Body you will also write email as such:
+{
+  "name" : "Paul",
+  "email": "daud@86",
+  "password": "12345"
+}
+
+Now inside your try block of Signup write:
+try {
+
+    const { name, email, password } = req.body;
+    if(!email || !name || !password)
+    {
+    return req.send({
+      message: "Please fill out all the required field",
+      success: false
+    })
+    }
+
+
+  }
+
+After that for catch statement write as well as such:
+catch (error) {
+    console.log("Error while handling Signup form is:", error);
+    return res.send({message: error.message, success: false})
+    
+  }
+
+Inorder to check that functionality that you've added is working or not.
+Go to Thunder Client. And add only one field for testing with same url
+
+Corrected code of controller for Signup is:
+export const Signup = (req, res) => {
+  console.log("The req.body is:", req.body);
+
+  try {
+    const { name, email, password } = req.body;
+    if (!email || !name || !password) {
+      return res.send({  // ← fixed this line
+        message: "Please fill out all the required fields",
+        success: false
+      });
+    }
+
+    // Proceed with signup logic here...
+
+  } catch (error) {
+    console.log("Error while handling Signup form is:", error);
+    return res.send({ message: error.message, success: false });
+  }
+};
+
+firstly, we checked that for all entries. Now, we'll see that whether in DB it's account has been made or not
+I mean this user exists in DB or not.
+
+Now, we'll add functionality that whether the user exists or not.
+
+Add this under try block as such:
+    // Proceed with signup logic here...
+
+    const checkexistUser = await userModel.findOne({ email });
+
+    if(checkexistUser)
+    {
+     return res.send({message: "user Already exist", success:false})
+    }
+
+For this add this on top: import userModel from "../model/userModel.js"
+
+Now, we'll see that if user enter password bcrypt it.
+
+for this we'll install bcryptjs dependency on terminal by giving command:
+nodemon i bcryptjs
+
+Now, we;ll import bcryptjs in controller file as such:
+import bcrypt from "bcryptjs";
+
+Now, under 'if' statement of 'user already exists'
+
+write:
+    const salt = bcrypt.genSalt(10);
+    const hashpassword = await bcrypt.hash(password, salt)
+
+now, we'll store that password in DB
+ So, write:     const newUser = new userModel({
+      name,
+      email,
+      password: hashpassword
+    })
+
+    newUser.save();
+
+    return res.send({ message: "User created successfully", success: true })
+
+   Write it under hashpassword declaration.
+
+  After that we'll see it on thunder Client by entering name, email, password. But will get error.
+
+  remove error: remove await in hashpassword
+  
+  As such: 
+    const salt = await bcrypt.genSalt(10);
+    const hashpassword = await bcrypt.hash(password, salt);
+    console.log(hashpassword);
+
+
+Now, it will show "User Signup successfully".
+
+
+complete Signup logic is:
+    const checkexistUser = await userModel.findOne({ email });
+
+    if (checkexistUser) {
+      return res.send({ message: "user Already exist", success: false })
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashpassword = await bcrypt.hash(password, salt);
+    console.log(hashpassword);
+
+
+    const newUser = new userModel({
+      name,
+      email,
+      password: hashpassword
+    })
+
+    const saveduser = newUser.save();
+
+    return res.send({ message: "User SignUp successfully", newUser: saveduser, success: true })
+
+Complete Signup code is:
+export const Signup = async (req, res) => {
+  console.log("The req.body is:", req.body);
+
+  try {
+    const { name, email, password } = req.body;
+    if (!email || !name || !password) {
+      return res.send({  // ← fixed this line
+        message: "Please fill out all the required fields",
+        success: false
+      });
+    }
+
+    // Proceed with signup logic here...
+
+    const checkexistUser = await userModel.findOne({ email });
+
+    if (checkexistUser) {
+      return res.send({ message: "user Already exist", success: false })
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashpassword = await bcrypt.hash(password, salt);
+    console.log(hashpassword);
+
+
+    const newUser = new userModel({
+      name,
+      email,
+      password: hashpassword
+    })
+
+    const saveduser = newUser.save();
+
+    return res.send({ message: "User SignUp successfully", newUser: saveduser, success: true })
+
+
+  } catch (error) {
+    console.log("Error while handling Signup form is:", error);
+    return res.send({ message: error.message, success: false });
+  }
+};
+
+
+Now, see in MongoDB Atlas that entry created successfully or not.
+
+After that we'll put token in our Cookies
+for this we'll install package of jsonwebtoken through our terminal
+
+nodemon i jsonwebtoken
+
+then we'll import jsonwebtoken on top of controller file as such:
+import jwt from "jsonwebtoken";
+
+We'll use Token after using .save() function, remember it in your code:
+
+    const token = await jwt.sign({_id: newUser._id}, "Thisismysignupauthwork");
+
+But we'll write TOKEN_SECRET in .env file as such:
+TOKEN_SECRET = Thisismysignupauthwork
+
+updated controller code for it as such: 
+    const token = await jwt.sign({_id: newUser._id}, process.env.TOKEN_SECRET);
+
+Now, we'll check token that is created through terminal
+
+We'll delete the user that we have made in database
+
+Now, go to thunder client and check it , but you'll get error because of:
+
+    const saveduser = newUser.save();
+
+Use await in it as such: 
+
+    const saveduser =await newUser.save();
+
+Now, it'll work correctly.
+
+After declaring token write:
+if(!token)
+    {
+     return res.send({message: "Token is not created", success: false})
+    }
+
+Now, everything works expectedly. Full code of Signup is: 
+
+export const Signup = async (req, res) => {
+  console.log("The req.body is:", req.body);
+
+  try {
+    const { name, email, password } = req.body;
+    if (!email || !name || !password) {
+      return res.send({  // ← fixed this line
+        message: "Please fill out all the required fields",
+        success: false
+      });
+    }
+
+    // Proceed with signup logic here...
+
+    const checkexistUser = await userModel.findOne({ email });
+
+    if (checkexistUser) {
+      return res.send({ message: "user Already exist", success: false })
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashpassword = await bcrypt.hash(password, salt);
+    console.log(hashpassword);
+
+
+    const newUser = new userModel({
+      name,
+      email,
+      password: hashpassword
+    })
+
+    const saveduser =await newUser.save();
+
+    const token = await jwt.sign({_id: newUser._id}, process.env.TOKEN_SECRET);
+
+    if(!token)
+    {
+     return res.send({message: "Token is not created", success: false})
+    }
+
+
+    return res.send({ message: "User SignUp successfully", newUser: saveduser, success: true })
+
+
+  } catch (error) {
+    console.log("Error while handling Signup form is:", error);
+    return res.send({ message: error.message, success: false });
+  }
+};
+
+Now, next step is to store the token in cookies as follow:
+ Now we'll install cookie parser in our project by running following command in terminal:
+nodemon i cookie-parser
+
+now, we'll include cookie parser in index.js as follow:
+
+app.use(express.json());
+
+app.use(cookieParser());
+
+Now, we'll update line:     return res.send({ message: "User SignUp successfully", newUser: saveduser, success: true })
+
+Updated code: 
+
+    return res.cookie("token", token, {
+      httpOnly : true
+    })
+    .send({ message: "User SignUp successfully", newUser: saveduser, success: true })
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
