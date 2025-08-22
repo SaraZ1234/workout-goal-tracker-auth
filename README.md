@@ -1,53 +1,53 @@
-🏋️ Workout Goal Tracker
+## 🏋️ Workout Goal Tracker
 
 A fitness web application that allows users to track their workouts, set fitness goals, and manage progress. Built with Node.js, Express, MongoDB, HTML, CSS, and JavaScript.
 Planned for future deployment with Redis integration for caching and performance improvements.
 
-🚀 Features
+## 🚀 Features
 
-🔑 User Authentication (Signup/Login with validation)
+### 🔑  User Authentication (Signup/Login with validation)
 
-📊 Track Workouts (Add, update, delete exercises)
+### 📊  Track Workouts (Add, update, delete exercises)
 
-🎯 Set and Manage Fitness Goals
+### 🎯  Set and Manage Fitness Goals
 
-👤 Profile Management (Update/Delete profile)
+### 👤  Profile Management (Update/Delete profile)
 
-🌍 Community Page for fitness enthusiasts
+### 🌍  Community Page for fitness enthusiasts
 
-🗺 Map Integration (future enhancement)
+### 🗺  Map Integration (future enhancement)
 
-🛠 Tech Stack
+## 🛠 Tech Stack
 
-Frontend: HTML, CSS, JavaScript
+### Frontend: HTML, CSS, JavaScript
 
-Backend: Node.js, Express
+### Backend: Node.js, Express
 
-Database: MongoDB
+### Database: MongoDB
 
-Authentication: Custom validation (with plans for JWT/Passport in future)
+### Authentication: Custom validation (with plans for JWT/Passport in future)
 
-Caching & Deployment (Future): Redis
+### Caching & Deployment (Future): Redis
 
-📂 Project Setup
-1. Clone the repository
+## 📂 Project Setup
+### 1. Clone the repository
 git clone https://github.com/your-username/workout-goal-tracker-auth.git
 cd workout-goal-tracker-auth
 
-2. Install dependencies
+### 2. Install dependencies
 npm install
 
-3. Create .env file
+### 3. Create .env file
 
 Add environment variables:
 PORT=3000
 MONGODB_URI=your_mongodb_connection_string
 SECRET_KEY=your_secret_key
 
-4. Run the project
+### 4. Run the project
 npm start
 
-🔮 Future Enhancements
+## 🔮 Future Enhancements
 
 ✅ Deployment with Redis for caching
 
@@ -57,7 +57,7 @@ npm start
 
 👩‍💻 Author
 
-Sarah Javaid
+## Sarah Javaid
 BSCS Student | Web Developer | Flutter Developer | QA → AI Chatbot Enthusiast
 
 ✨ Feel free to fork this project and contribute improvements!
