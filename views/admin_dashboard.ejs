@@ -648,8 +648,9 @@
 
         const workoutId = document.getElementById("workoutId").value;
         const url = workoutId
-          ? `/api/admin/workouts/${workoutId}`
-          : `/api/admin/workouts/add`;
+  ? `/api/admin/workouts/${workoutId}`   // PUT
+  : `/api/admin/workouts`;              // POST (no /add)
+
         const method = workoutId ? "PUT" : "POST";
 
         try {
