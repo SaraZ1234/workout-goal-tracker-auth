@@ -208,7 +208,9 @@
 
       <!-- Desktop buttons -->
       <div class="btn desktop-btn">
-        <button class="a" onclick="location.href='/api/user/logout'">Logout</button>
+        <button class="a" onclick="location.href='/api/user/logout'">
+          Logout
+        </button>
       </div>
 
       <!-- Hamburger -->
@@ -230,7 +232,9 @@
       </nav>
 
       <div class="btn">
-        <button class="a" onclick="location.href='/api/user/logout'">Logout</button>
+        <button class="a" onclick="location.href='/api/user/logout'">
+          Logout
+        </button>
       </div>
 
       <!-- Mobile nav placeholder -->
@@ -648,8 +652,8 @@
 
         const workoutId = document.getElementById("workoutId").value;
         const url = workoutId
-  ? `/api/admin/workouts/${workoutId}`   // PUT
-  : `/api/admin/workouts`;              // POST (no /add)
+          ? `/api/admin/workouts/${workoutId}` // PUT
+          : `/api/admin/workouts`; // POST (no /add)
 
         const method = workoutId ? "PUT" : "POST";
 

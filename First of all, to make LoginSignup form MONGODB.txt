@@ -11,7 +11,7 @@ I will write this in package.json:
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
+  "type": "module"
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cookie-parser": "^1.4.7",
@@ -541,6 +541,9 @@ Updated code:
       httpOnly : true
     })
     .send({ message: "User SignUp successfully", newUser: saveduser, success: true })
+
+To check everything is working right or not remove the user from DB, and start thunder client to see
+
 
  
 
